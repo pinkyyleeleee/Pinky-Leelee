@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Pinky Leelee</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="center">
+      <img src="img/font1.png" alt="calligraphy font" />
+      <a href="#" class="butterfly-wrap">
+        <img class="butterflyhover" src="img/font2.png" alt="another font" />
+      </a>
+      <img src="img/font5.png" alt="another font" />
+      <h1>Pinky LeeLee</h1>
+      <div id="mailBubble" class="hidden">
+        <h2 id="email">Email Requested:</h2>
+        <form id="emailForm">
+          <input type="email" placeholder="enter your email" required />
+          <button type="submit">submit</button>
+        </form>
+      </div>
+    </div>
+    <script>
+      const butterfly = document.querySelector(".butterflyhover");
+      const bubble = document.getElementById("mailBubble");
+      const form = document.getElementById("emailForm");
+
+      // toggle mailing box
+      butterfly.addEventListener("click", function (e) {
+        e.preventDefault();
+        bubble.classList.toggle("hidden");
+      });
+
+      // send email to Google Sheet
+      form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        const email = form.querySelector("input").value;
+
+        await fetch(
+          "https://script.google.com/macros/s/AKfycbw8Y4j9uWwKcEGT85ZBbosyx1TXMUaHQ0BHkpTkY6PmC9RQ_w1_uvGOR5aJlMlJrmjS/exec",
+          {
+            method: "POST",
+            body: JSON.stringify({ email: email }),
+          }
+        );
+
+        form.reset();
+      });
+    </script>
+  </body>
+</html>
