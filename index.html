@@ -3,18 +3,28 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Pinky Leelee</title>
+
     <link rel="stylesheet" href="styles.css" />
+
+    <!-- gaming font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
   </head>
+
   <body>
     <div class="center">
-      <img src="img/font1.png" alt="calligraphy font" />
+      <img src="img/font1.png" alt="font1" />
+
       <a href="#" class="butterfly-wrap">
-        <img class="butterflyhover" src="img/font2.png" alt="another font" />
+        <img class="butterflyhover" src="img/font2.png" alt="butterfly" />
       </a>
-      <img src="img/font5.png" alt="another font" />
+
+      <img src="img/font5.png" alt="font5" />
       <h1>Pinky LeeLee</h1>
+
       <div id="mailBubble" class="hidden">
         <h2 id="email">Email Requested:</h2>
         <form id="emailForm">
@@ -23,18 +33,41 @@
         </form>
       </div>
     </div>
+
+    <!-- floaters -->
+    <img src="img/critter.png" class="floater" />
+    <img src="img/doghalo.png" class="floater" />
+    <img src="img/cat.png" class="floater" />
+    <img src="img/pony.png" class="floater" />
+    <img src="img/sparkle.png" class="floater" width="60px" />
+
+    <!-- audio -->
+    <audio id="song" src="assets/song.m4a" preload="auto"></audio>
+
     <script>
       const butterfly = document.querySelector(".butterflyhover");
       const bubble = document.getElementById("mailBubble");
       const form = document.getElementById("emailForm");
+      const song = document.getElementById("song");
 
-      // toggle mailing box
+      let stopFloaters = false;
+      let isPlaying = false;
+
       butterfly.addEventListener("click", function (e) {
         e.preventDefault();
+
         bubble.classList.toggle("hidden");
+
+        if (!isPlaying) {
+          song.play();
+          isPlaying = true;
+        } else {
+          song.pause();
+          song.currentTime = 0;
+          isPlaying = false;
+        }
       });
 
-      // send email to Google Sheet
       form.addEventListener("submit", async function (e) {
         e.preventDefault();
 
@@ -44,12 +77,187 @@
           "https://script.google.com/macros/s/AKfycbw8Y4j9uWwKcEGT85ZBbosyx1TXMUaHQ0BHkpTkY6PmC9RQ_w1_uvGOR5aJlMlJrmjS/exec",
           {
             method: "POST",
-            body: JSON.stringify({ email: email }),
+            body: JSON.stringify({ email }),
           }
         );
 
         form.reset();
+
+        stopFloaters = true;
+
+        document.querySelector(".center").style.opacity = "0";
+        bubble.style.opacity = "0";
+
+        const floaters = document.querySelectorAll(".floater");
+
+        floaters.forEach((floater, index) => {
+          floater.style.transition = "all 3s ease-in-out";
+          floater.style.top = "50%";
+          floater.style.left = `calc(50% + ${
+            (index - (floaters.length - 1) / 2) * 140
+          }px)`;
+          floater.style.transform = "translate(-50%, -50%) rotate(0deg)";
+        });
+
+        // PINKY + LEELEE APPEAR (clean class version)
+        setTimeout(() => {
+          const pinky = document.createElement("img");
+          const leelee = document.createElement("img");
+
+          pinky.src = "img/pinky.png";
+          leelee.src = "img/leelee.png";
+
+          pinky.classList.add("story-character", "pinky");
+          leelee.classList.add("story-character");
+
+          pinky.style.left = "10%";
+          leelee.style.right = "10%";
+
+          document.body.appendChild(pinky);
+          document.body.appendChild(leelee);
+        }, 3200);
+
+        // STORY SEQUENCE
+        setTimeout(() => {
+          document.body.style.background = "#ffd6e8";
+
+          const message = document.createElement("div");
+          message.className = "final-message";
+          document.body.appendChild(message);
+
+          const text1 = "Pinky Leelee have landed on planet Earth.";
+          const text2 =
+            "Mission: preserve the magic of friendship through music.";
+          const text3 = "Do you want to help them on their mission?";
+
+          function typeFirst(i = 0) {
+            if (i < text1.length) {
+              message.innerHTML += text1.charAt(i);
+              setTimeout(() => typeFirst(i + 1), 40);
+            } else {
+              setTimeout(() => {
+                message.innerHTML = "";
+                typeSecond();
+              }, 1200);
+            }
+          }
+
+          function typeSecond(i = 0) {
+            if (i < text2.length) {
+              message.innerHTML += text2.charAt(i);
+              setTimeout(() => typeSecond(i + 1), 40);
+            } else {
+              setTimeout(() => {
+                message.innerHTML = "";
+                typeThird();
+              }, 1200);
+            }
+          }
+
+          function typeThird(i = 0) {
+            if (i < text3.length) {
+              message.innerHTML += text3.charAt(i);
+              setTimeout(() => typeThird(i + 1), 40);
+            } else {
+              setTimeout(() => {
+                const buttons = document.createElement("div");
+                buttons.className = "choice-buttons";
+
+                const yesBtn = document.createElement("button");
+                yesBtn.textContent = "YES";
+
+                const noBtn = document.createElement("button");
+                noBtn.textContent = "NO";
+
+                buttons.appendChild(yesBtn);
+                buttons.appendChild(noBtn);
+                message.appendChild(buttons);
+
+                yesBtn.addEventListener("click", () => {
+                  const response = document.createElement("div");
+                  response.style.marginTop = "20px";
+                  response.style.fontFamily = '"Press Start 2P", monospace';
+                  response.style.fontSize = "0.7rem";
+                  response.style.color = "#ff69b4";
+                  response.style.textAlign = "center";
+
+                  response.innerHTML = "Joy! Joy! We will be in touch shortly.";
+
+                  message.appendChild(response);
+                  buttons.remove();
+                });
+
+                noBtn.addEventListener("click", () => {
+                  const response = document.createElement("div");
+
+                  response.style.marginTop = "20px";
+                  response.style.fontFamily = '"Press Start 2P", monospace';
+                  response.style.fontSize = "0.7rem";
+                  response.style.color = "#ff69b4";
+                  response.style.textAlign = "center";
+
+                  response.innerHTML =
+                    "Darkness descends, there is nothing left. Click to turn back the clock.";
+
+                  message.appendChild(response);
+
+                  const clock = document.createElement("img");
+                  clock.src = "img/clock.png";
+                  clock.style.width = "120px";
+                  clock.style.display = "block";
+                  clock.style.margin = "20px auto";
+                  clock.style.cursor = "pointer";
+
+                  message.appendChild(clock);
+
+                  buttons.remove();
+
+                  clock.addEventListener("click", () => {
+                    message.innerHTML = "";
+                    typeThird();
+                  });
+                });
+              }, 1200);
+            }
+          }
+
+          typeFirst();
+        }, 3500);
       });
+
+      // floaters animation
+      const floaters = document.querySelectorAll(".floater");
+
+      function createFloater(floater) {
+        let x = Math.random() * (window.innerWidth - 120);
+        let y = Math.random() * (window.innerHeight - 120);
+
+        let dx = (Math.random() * 0.2 + 0.05) * (Math.random() < 0.5 ? -1 : 1);
+        let dy = (Math.random() * 0.2 + 0.05) * (Math.random() < 0.5 ? -1 : 1);
+
+        let rotation = Math.random() * 360;
+
+        function animate() {
+          if (stopFloaters) return;
+
+          x += dx;
+          y += dy;
+
+          if (x < 0 || x > window.innerWidth - 120) dx *= -1;
+          if (y < 0 || y > window.innerHeight - 120) dy *= -1;
+
+          rotation += 0.2;
+
+          floater.style.transform = `translate(${x}px, ${y}px) rotate(${rotation}deg)`;
+
+          requestAnimationFrame(animate);
+        }
+
+        animate();
+      }
+
+      floaters.forEach(createFloater);
     </script>
   </body>
 </html>
+
