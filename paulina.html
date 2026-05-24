@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pinky Leelee — For Paulina</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://calendar.google.com/calendar/scheduling-button-script.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="email.css" />
+  </head>
+
+  <body>
+    <a href="index.html" class="home-btn" style="visibility: hidden">← home</a>
+    <img
+      src="img/radio.png"
+      alt="speaker"
+      class="speaker"
+      style="visibility: hidden"
+    />
+    <audio id="emailSound" src="assets/emailsong.wav"></audio>
+
+    <span class="sparkle" style="top: 8%; left: 5%; animation-delay: 0s"
+      >✦</span
+    >
+    <span class="sparkle" style="top: 15%; right: 8%; animation-delay: 0.7s"
+      >✦</span
+    >
+    <span class="sparkle" style="bottom: 20%; left: 4%; animation-delay: 1.2s"
+      >✦</span
+    >
+    <span class="sparkle" style="bottom: 10%; right: 6%; animation-delay: 0.3s"
+      >✦</span
+    >
+    <span
+      class="sparkle"
+      style="top: 50%; left: 2%; animation-delay: 1.8s; font-size: 0.6rem"
+      >✦</span
+    >
+    <span
+      class="sparkle"
+      style="top: 40%; right: 3%; animation-delay: 0.9s; font-size: 0.6rem"
+      >✦</span
+    >
+
+    <div class="letter">
+      <p class="greeting">Dear Paulina,</p>
+
+      <p class="body-text">
+        Thank you for being here. We would love your help as we continue to
+        traverse paths unknown!
+      </p>
+
+      <p class="body-text">
+        Our first EP, with five tracks, will be released before summer's end.
+      </p>
+
+      <p class="body-text">We hear your feedback:</p>
+
+      <div class="quote-block">
+        <p>
+          “Would love to know more concrete goals but the presentation was
+          great: excellent music, branding, exactly the music I love. I didn't
+          get a chance to comment but I'm a fan and really love what y'all are
+          doing! Hopefully we could get in touch!”
+        </p>
+      </div>
+
+      <p class="roadmap-title">Here is our roadmap:</p>
+
+      <div class="roadmap-item">
+        <div class="dot"></div>
+        <p>
+          Location scouting and pre-production design for the "Horses" mv will
+          be finalized by the end of June. We will also finish coding the main
+          infrastructure for the website.
+        </p>
+      </div>
+
+      <div class="roadmap-item">
+        <div class="dot"></div>
+        <p>
+          Filming for the mv will take place over the first couple weeks of
+          July, with a release date set for the end of the month (click boombox
+          for a sneak peek :D).
+        </p>
+      </div>
+
+      <p class="closing">
+        The arrival of Pinky Leelee is definitely in the works. We appreciate
+        any further insight you have, and resources you’d be willing to share
+        with us. Would you like to schedule a meeting in-person?
+      </p>
+
+      <div class="calendar-btn-wrap" style="visibility: hidden">
+        <script
+          src="https://calendar.google.com/calendar/scheduling-button-script.js"
+          async
+        ></script>
+        <script>
+          (function () {
+            var target = document.currentScript;
+            window.addEventListener("load", function () {
+              calendar.schedulingButton.load({
+                url: "https://calendar.google.com/calendar/appointments/schedules/AcZssZ30Gz-oMCvGmM_iJ-paX-dH7h8CSBcONkGHpd9JMvCZ-d4gODH5OE2B_xIbVugc5hDZfX8tU9b1?gv=true",
+                color: "#ffb6d9",
+                label: "Book an appointment",
+                target,
+              });
+            });
+          })();
+        </script>
+      </div>
+
+      <p class="sig">
+        Sincerely, Prianka Ramalingam (Pinky) & Madelyn Lee (Leelee)
+      </p>
+    </div>
+
+    <div class="character-wrap pinky-side" style="visibility: hidden">
+      <div class="speech-bubble">hope to see you there!</div>
+      <img src="img/pinky.png" alt="Pinky" />
+    </div>
+    <div class="character-wrap leelee-side" style="visibility: hidden">
+      <div class="speech-bubble">hope to see you there!</div>
+      <img src="img/leelee.png" alt="Leelee" />
+    </div>
+
+    <script>
+      const elements = document.querySelectorAll(
+        ".greeting, .body-text, .quote-block p, .roadmap-title, .roadmap-item p, .closing, .sig"
+      );
+
+      let delay = 0;
+
+      elements.forEach((el) => {
+        const original = el.innerHTML;
+        el.innerHTML = "";
+        el.style.visibility = "hidden";
+
+        setTimeout(() => {
+          el.style.visibility = "visible";
+          el.innerHTML = "";
+          let i = 0;
+          const temp = document.createElement("div");
+          temp.innerHTML = original;
+          const text = temp.textContent;
+
+          function type() {
+            if (i < text.length) {
+              el.textContent += text.charAt(i);
+              i++;
+              setTimeout(type, 18);
+            }
+          }
+          type();
+        }, delay);
+
+        delay += original.replace(/<[^>]*>/g, "").length * 18 + 400;
+      });
+
+      const totalDelay = delay;
+
+      setTimeout(() => {
+        document.querySelector(".home-btn").style.visibility = "visible";
+        document.querySelector(".speaker").style.visibility = "visible";
+        document.querySelector(".calendar-btn-wrap").style.visibility =
+          "visible";
+        document.querySelectorAll(".character-wrap").forEach((el) => {
+          el.style.visibility = "visible";
+        });
+      }, totalDelay);
+
+      const speaker = document.querySelector(".speaker");
+      const emailSound = document.getElementById("emailSound");
+
+      speaker.addEventListener("click", () => {
+        emailSound.play();
+      });
+    </script>
+  </body>
+</html>
