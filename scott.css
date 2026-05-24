@@ -1,0 +1,257 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  background: #fff0f6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: "Press Start 2P", monospace;
+  padding: 40px 20px 60px;
+  animation: fadeIn 1.2s ease forwards;
+}
+
+.home-btn {
+  position: fixed;
+  top: 24px;
+  left: 24px;
+  font-family: "Press Start 2P", monospace;
+  font-size: 0.45rem;
+  color: #ff69b4;
+  text-decoration: none;
+  border: 2px solid #ff69b4;
+  padding: 8px 12px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 999;
+}
+
+.speaker {
+  position: fixed;
+  width: 50px;
+  top: 12px;
+  left: 100px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 999;
+}
+
+.home-btn:hover {
+  background: #ff69b4;
+  color: white;
+}
+
+.letter {
+  background: white;
+  border: 3px solid #ff69b4;
+  border-radius: 20px;
+  box-shadow: 0 0 30px rgba(255, 105, 180, 0.2);
+  max-width: 720px;
+  width: 100%;
+  padding: 48px 52px;
+  position: relative;
+}
+
+.letter::before {
+  content: "✦";
+  position: absolute;
+  top: 16px;
+  left: 20px;
+  color: #ffb6d9;
+  font-size: 1rem;
+}
+.letter::after {
+  content: "✦";
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  color: #ffb6d9;
+  font-size: 1rem;
+}
+
+.greeting {
+  font-size: 0.6rem;
+  color: #ff69b4;
+  line-height: 2.2;
+  margin-bottom: 28px;
+}
+
+.quote-block {
+  border-left: 4px solid #ffb6d9;
+  margin: 28px 0;
+  padding: 16px 20px;
+  background: #fff0f6;
+  border-radius: 0 12px 12px 0;
+}
+
+.quote-block p {
+  font-size: 0.42rem;
+  color: #aa3366;
+  line-height: 2.4;
+  font-style: italic;
+}
+
+.roadmap-title {
+  font-size: 0.55rem;
+  color: #ff69b4;
+  margin: 28px 0 16px;
+  text-decoration: underline;
+}
+
+.roadmap-item {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  min-width: 10px;
+  border-radius: 50%;
+  background: #ff69b4;
+  margin-top: 6px;
+}
+
+.roadmap-item p {
+  font-size: 0.42rem;
+  color: #cc4488;
+  line-height: 2.4;
+}
+.body-text {
+  font-size: 0.5rem;
+  color: #cc4488;
+  line-height: 2.4;
+  margin-bottom: 20px;
+}
+.closing {
+  font-size: 0.45rem;
+  color: #cc4488;
+  line-height: 2.6;
+  margin-top: 28px;
+}
+
+.sig {
+  margin-top: 20px;
+  font-size: 0.45rem;
+  color: #ff69b4;
+  line-height: 2.4;
+  white-space: pre-line;
+}
+
+.character-wrap {
+  position: fixed;
+  bottom: 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 10;
+}
+
+.character-wrap.pinky-side {
+  left: 40px;
+}
+.character-wrap.leelee-side {
+  right: 40px;
+}
+
+.character-wrap img {
+  width: 180px;
+  height: 210px;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+  margin: 0 auto;
+  animation: float 3s ease-in-out infinite;
+}
+
+.character-wrap.pinky-side img {
+  object-position: 70% center;
+}
+
+.character-wrap.leelee-side img {
+  animation-delay: 0.5s;
+}
+
+.speech-bubble {
+  background: white;
+  border: 2px solid #ff69b4;
+  border-radius: 12px;
+  padding: 8px 12px;
+  font-size: 0.35rem;
+  color: #ff69b4;
+  font-family: "Press Start 2P", monospace;
+  margin-bottom: 10px;
+  position: relative;
+  white-space: nowrap;
+}
+
+.speech-bubble::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 8px solid #ff69b4;
+}
+
+.sparkle {
+  position: fixed;
+  pointer-events: none;
+  font-size: 1rem;
+  color: #ffb6d9;
+  animation: twinkle 2s ease-in-out infinite;
+  z-index: 0;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+.calendar-btn-wrap {
+  margin-top: 24px;
+}
+.calendar-btn-wrap button {
+  font-family: "Press Start 2P", monospace !important;
+  font-size: 0.4rem !important;
+  color: white !important;
+}
