@@ -130,6 +130,73 @@
     </div>
 
     <script>
+      function makeDraggable(el) {
+        let isDragging = false;
+        let offsetX, offsetY;
+
+        el.style.cursor = "grab";
+
+        el.addEventListener("mousedown", (e) => {
+          isDragging = true;
+          const rect = el.getBoundingClientRect();
+          offsetX = e.clientX - rect.left;
+          offsetY = e.clientY - rect.top;
+          el.style.position = "fixed";
+          el.style.left = rect.left + "px";
+          el.style.top = rect.top + "px";
+          el.style.bottom = "auto";
+          el.style.right = "auto";
+          el.style.cursor = "grabbing";
+          e.preventDefault();
+        });
+
+        document.addEventListener("mousemove", (e) => {
+          if (!isDragging) return;
+          el.style.left = e.clientX - offsetX + "px";
+          el.style.top = e.clientY - offsetY + "px";
+        });
+
+        document.addEventListener("mouseup", () => {
+          if (isDragging) {
+            isDragging = false;
+            el.style.cursor = "grab";
+          }
+        });
+
+        el.addEventListener(
+          "touchstart",
+          (e) => {
+            const touch = e.touches[0];
+            const rect = el.getBoundingClientRect();
+            isDragging = true;
+            offsetX = touch.clientX - rect.left;
+            offsetY = touch.clientY - rect.top;
+            el.style.position = "fixed";
+            el.style.left = rect.left + "px";
+            el.style.top = rect.top + "px";
+            el.style.bottom = "auto";
+            el.style.right = "auto";
+            e.preventDefault();
+          },
+          { passive: false }
+        );
+
+        document.addEventListener(
+          "touchmove",
+          (e) => {
+            if (!isDragging) return;
+            const touch = e.touches[0];
+            el.style.left = touch.clientX - offsetX + "px";
+            el.style.top = touch.clientY - offsetY + "px";
+            e.preventDefault();
+          },
+          { passive: false }
+        );
+
+        document.addEventListener("touchend", () => {
+          isDragging = false;
+        });
+      }
       const elements = document.querySelectorAll(
         ".greeting, .body-text, .quote-block p, .roadmap-title, .roadmap-item p, .closing, .sig"
       );
@@ -171,6 +238,7 @@
           "visible";
         document.querySelectorAll(".character-wrap").forEach((el) => {
           el.style.visibility = "visible";
+          makeDraggable(el);
         });
       }, totalDelay);
 
